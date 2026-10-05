@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>It's Bhedu's birthday! YAY! 🎂</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      #mainTitle {
+        font-size: 32px;
+        font-family: 'Pixelify Sans', sans-serif;
+        margin-bottom: 8px;
+      }
+
+      #subTitle {
+        font-size: 18px;
+        font-family: 'Pixelify Sans', sans-serif;
+        color: #a53763;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="birthdayText"></div>
+      <div class="cake-container">
+        <div class="cake" id="cake"></div>
+      </div>
+    </div>
+<!-- === After Birthday Interface === -->
+
+<div id="afterBirthday">
+ <!-- PAGE 2 -->
+  <div id="birthdayPage" class="birthday-content">
+
+    <h1 id="birthdayName">
+      Happy Birthday Bheduwaaaa!
+    </h1>
+   
+    <p class="birthday-message">
+      I hope this will be your last single birthday and if not then please don't kill yourself 💗
+    </p>
+
+    <button id="surpriseButton">
+      Open for some lovebombing
+    </button>
+</div>
+ <div id="letterPage">
+    <div class="letter">
+      <h1>To you Bhedu,</h1>
+
+      <p>
+        I love youu 
+      </p>
+
+      <p>
+        You became confident in yourself and I want you to carry yourself like that for the rest of your life. 
+      </p>
+
+      <p>
+        Take love,<br>
+        Your sexiest bff 💗
+      </p>
+    </div>
+  </div>
+</div>
+  </div>
+
+</div>
+    <script>
+      // Read URL params
+      const params = new URLSearchParams(window.location.search);
+      const name = params.get("name") || "Bhedu";
+      
+      let candleCount = parseInt(params.get("candles")) || 27;
+      candleCount = Math.min(Math.max(candleCount, 1), 30);
+
+      const birthdayText = document.getElementById("birthdayText");
+      birthdayText.innerHTML = `
+        <div id="mainTitle">${name} turns old af yayyy!</div>
+        <div id="subTitle">Make a wish and tap away at your twenty-something {wink} candles ;D.</div>
+      `;
+
+      const cake = document.getElementById("cake");
+
+      const colors = [
+        "green-candle",
+        "purple-candle",
+        "blue-candle",
+        "yellow-candle",
+      ];
+      const CAKE_VISUAL_WIDTH = 35;
+
+      function createCandles(count) {
+        cake.innerHTML = "";
+        const CANDLE_VISUAL_WIDTH = 2;
+        const availableWidth = CAKE_VISUAL_WIDTH;
+        const candlesPerRow = 6;
+        const rowCount = Math.ceil(count / candlesPerRow);
+        const shiftAmount = 4;
+
+        for (let i = 0; i < count; i++) {
+          const candle = document.createElement("div");
+          candle.classList.add("candle");
+          const colorClass = colors[Math.floor(Math.random() * colors.length)];
+          candle.classList.add(colorClass);
+
+          const row = Math.floor(i / candlesPerRow);
+          const col = i % candlesPerRow;
+          const totalCandlesInRow = Math.min(
+            candlesPerRow,
+            count - row * candlesPerRow
+          );
+          const rowSpacing = availableWidth / (totalCandlesInRow + 1);
+
+          const leftBase = rowSpacing * (col + 1) - CANDLE_VISUAL_WIDTH / 2 + 5;
+          const rowShift = row % 2 === 0 ? 0 : shiftAmount;
+
+          candle.style.position = "absolute";
+          candle.style.top = `${10 + row * 3}px`;
+          candle.style.left = `${leftBase - rowShift + 4}px`;
+
+          cake.appendChild(candle);
+        }
+      }
+
+      createCandles(candleCount);
+
+      // === Microphone / Blow Detection ===
+
+  // === Tap to Blow ===
+
+  let candlesBlown = false;
+
+  document.addEventListener("click", () => {
+    if (candlesBlown) return;
+
+    candlesBlown = true;
+
+    blowOutCandles();
+
+    // Wait for the candle animation to finish
+    setTimeout(() => {
+      document.body.classList.add("birthday-complete");
+    }, 1200);
+  });
+
+  function blowOutCandles() {
+    const candles = document.querySelectorAll(".candle");
+
+    candles.forEach((candle) => {
+      const delay = Math.random() * 1000;
+
+      setTimeout(() => {
+        colors.forEach((color) => {
+          if (candle.classList.contains(color)) {
+            candle.classList.add("blown");
+          }
+        });
+      }, delay);
+    });
+  }
+const surpriseButton = document.getElementById("surpriseButton");
+
+if (surpriseButton) {
+  surpriseButton.addEventListener("click", () => {
+    document.body.classList.add("letter-open");
+  });
+}
+    </script>
+  </body>
+</html>
